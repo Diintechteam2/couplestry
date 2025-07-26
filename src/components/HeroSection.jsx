@@ -37,7 +37,7 @@ export default function HeroSection() {
   const next = () => setIndex((prev) => (prev + 1) % images.length)
 
   return (
-    <section className="relative w-full h-[60vw] min-h-[350px] max-h-[650px] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[60vw] min-h-[420px] max-h-[700px] md:min-h-[350px] md:max-h-[650px] flex items-center justify-center overflow-hidden">
       {/* Carousel Images (fade effect) */}
       <div className="absolute inset-0 w-full h-full flex">
         {images.map((img, i) => (

@@ -31,28 +31,24 @@ const categories = [
 export default function CategoryGrid() {
   // Swiper state for mobile
   const [active, setActive] = useState(0)
-  // const timeoutRef = useRef(null) // REMOVE
-
-  // REMOVE auto-scroll for mobile swiper
-  // useEffect(() => {
-  //   timeoutRef.current && clearTimeout(timeoutRef.current)
-  //   timeoutRef.current = setTimeout(() => {
-  //     setActive((prev) => (prev + 1) % categories.length)
-  //   }, 3500)
-  //   return () => clearTimeout(timeoutRef.current)
-  // }, [active])
-
-  // Scroll to active card on mobile (when dot is clicked)
   const scrollRef = useRef(null)
+  const isInitialLoad = useRef(true)
+  const userInteracted = useRef(false)
+
+  // Only scroll to active card when user clicks dots (not on initial load)
   useEffect(() => {
+    if (!userInteracted.current) return
+    
     if (scrollRef.current && window.innerWidth < 768) {
       const card = scrollRef.current.children[active]
       if (card) card.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
     }
   }, [active])
 
-  // Update active dot based on scroll position
+  // Update active dot based on scroll position (but not on initial load)
   function handleScroll() {
+    if (isInitialLoad.current) return
+    
     if (!scrollRef.current) return
     const container = scrollRef.current
     const children = Array.from(container.children)
@@ -69,6 +65,20 @@ export default function CategoryGrid() {
       }
     })
     setActive(closest)
+  }
+
+  // Mark initial load as complete after a short delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      isInitialLoad.current = false
+    }, 100)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Handle dot click
+  const handleDotClick = (index) => {
+    userInteracted.current = true
+    setActive(index)
   }
 
   return (
@@ -98,7 +108,7 @@ export default function CategoryGrid() {
           {categories.map((_, i) => (
             <button
               key={i}
-              onClick={() => setActive(i)}
+              onClick={() => handleDotClick(i)}
               className={`w-2.5 h-2.5 rounded-full border-2 ${i === active ? 'bg-pink-400 border-pink-400' : 'bg-transparent border-pink-200'}`}
               aria-label={`Go to slide ${i + 1}`}
             />

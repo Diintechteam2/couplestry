@@ -33,6 +33,7 @@ const categoryItems = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <>
       {/* Top Bar (not fixed, always visible at top) */}

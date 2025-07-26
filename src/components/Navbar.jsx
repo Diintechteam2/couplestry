@@ -78,7 +78,7 @@ export default function Navbar() {
 
       {/* Sticky Navbar (sticks to top after scrolling) */}
       <nav className="w-full bg-white px-4 py-3 md:py-6 shadow-sm sticky top-0 z-40">
-        <div className="relative flex items-center justify-between">
+        <div className="relative flex items-center justify-between md:mt-3">
           {/* Hamburger for mobile */}
           <div className="md:hidden flex items-center">
             <button onClick={() => setMenuOpen(true)} aria-label="Open menu">
@@ -86,9 +86,8 @@ export default function Navbar() {
             </button>
           </div>
           {/* Logo - Center */}
-          <div className="flex flex-col items-center flex-1">
-            <span className="text-[10px] text-gray-500 font-normal tracking-wider mb-1 md:text-xs">GROVERSONS</span>
-            <span className="text-2xl md:text-5xl font-serif text-[#F48FB1] font-bold tracking-tight">Couples Try</span>
+          <div className="flex flex-col items-center flex-1 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+            <span className="text-2xl md:text-5xl font-serif text-[#d6668c] font-bold tracking-tight">Couples Try</span>
           </div>
           {/* Icons - Right */}
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
@@ -103,7 +102,7 @@ export default function Navbar() {
           </div>
         </div>
         {/* Menu - Below Logo, only on md+ */}
-        <div className="hidden md:flex justify-center mt-4">
+        <div className="hidden md:flex justify-center mt-10">
           <ul className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs md:text-sm font-medium text-black">
             {menuItems.map((item) => (
               <li key={item} className="cursor-pointer">

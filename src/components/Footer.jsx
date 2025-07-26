@@ -1,25 +1,30 @@
-import { Truck, CreditCard, Shirt, Package, Mail, Phone } from "lucide-react"
-
+import { Truck, CreditCard, Shirt, Package, Mail, Phone, MessageCircle } from "lucide-react"
+import { FaWhatsapp } from "react-icons/fa";
 export default function Footer() {
   return (
-    <footer className="w-full bg-white mt-12">
-      {/* Top Row: Features */}
-      <div className="w-full flex flex-col md:flex-row justify-center items-center gap-8 md:gap-0 py-8 border-b border-gray-200 bg-[#fff]">
-        <div className="flex-1 flex flex-col items-center">
-          <Truck size={36} />
-          <span className="mt-2 font-medium text-lg text-center">Free Shipping on orders above ₹999</span>
+    <footer className="w-full bg-white mt-">
+      {/* Top Row: Features as Cards */}
+      <div className="w-full flex flex-col items-center">
+        <div className="w-full text-center md:mb-4">
+          <h2 className="text-2xl font-bold text-gray-800">Features</h2>
         </div>
-        <div className="flex-1 flex flex-col items-center">
-          <CreditCard size={36} />
-          <span className="mt-2 font-medium text-lg text-center">100% Secure Payments</span>
-        </div>
-        <div className="flex-1 flex flex-col items-center">
-          <Shirt size={36} />
-          <span className="mt-2 font-medium text-lg text-center">New Trendy<br />Styles</span>
-        </div>
-        <div className="flex-1 flex flex-col items-center">
-          <Package size={36} />
-          <span className="mt-2 font-medium text-lg text-center">Hassle Free Returns<br />and Exchange</span>
+        <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 py-8 border-b border-gray-200 bg-[#fff]">
+          <div className="w-64 md:flex-1 flex flex-col items-center rounded-xl shadow-md p-6 md:min-w-[220px] md:max-w-xs mx-auto" style={{ background: '#FFE4EC' }}>
+            <Truck size={36} />
+            <span className="mt-2 font-medium text-lg text-center text-gray-800">Free Shipping on orders above ₹999</span>
+          </div>
+          <div className="w-64 md:flex-1 flex flex-col items-center rounded-xl shadow-md p-6 md:min-w-[220px] md:max-w-xs mx-auto" style={{ background: '#E3F6FC' }}>
+            <CreditCard size={36} />
+            <span className="mt-2 font-medium text-lg text-center text-gray-800">100% Secure Payments</span>
+          </div>
+          <div className="w-64 md:flex-1 flex flex-col items-center rounded-xl shadow-md p-6 md:min-w-[220px] md:max-w-xs mx-auto" style={{ background: '#FFF9E3' }}>
+            <Shirt size={36} />
+            <span className="mt-2 font-medium text-lg text-center text-gray-800">New Trendy<br />Styles</span>
+          </div>
+          <div className="w-64 md:flex-1 flex flex-col items-center rounded-xl shadow-md p-6 md:min-w-[220px] md:max-w-xs mx-auto" style={{ background: '#E6F7F3' }}>
+            <Package size={36} />
+            <span className="mt-2 font-medium text-lg text-center text-gray-800">Hassle Free Returns<br />and Exchange</span>
+          </div>
         </div>
       </div>
       {/* Main Footer */}
@@ -28,8 +33,7 @@ export default function Footer() {
           {/* Logo & Community */}
           <div className="col-span-1 flex flex-col items-start">
           <div className="flex flex-col items-center flex-1">
-            <span className="text-[10px] text-gray-500 font-normal tracking-wider mb-1 md:text-xs">GROVERSONS</span>
-            <span className="text-2xl md:text-4xl font-serif text-[#F48FB1] font-bold tracking-tight">Couples Try</span>
+            <span className="text-2xl md:text-4xl font-serif text-[#b73963] font-bold tracking-tight">Couples Try</span>
             </div>
             <h3 className="text-xl font-cursive font-semibold mb-2">Join Our Community</h3>
             <p className="mb-3 text-base">Stay up to date with the new collections, products and exclusive offers</p>
@@ -67,17 +71,25 @@ export default function Footer() {
             <h4 className="text-xl font-cursive font-semibold mb-3">Contact</h4>
             <div className="flex items-center gap-2 mb-2">
               <Phone size={20} />
-              <span>+91 8147540362</span>
+              <span>+91 9971909625</span>
+              <a 
+                href="https://wa.me/919971909625?text=Hello%2C%20i%20wants%20to%20by%20on%20couples%20try" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-green-600 hover:text-green-700 transition-all duration-300 animate-bounce"
+              >
+                <FaWhatsapp size={28} />
+              </a>
             </div>
             <div className="flex items-center gap-2">
               <Mail size={20} />
-              <span>customercare@couplestry.com</span>
+              <span>contact@couplestry.com</span>
             </div>
           </div>
         </div>
         <hr className="my-8 border-gray-300" />
         <div className="text-center text-base text-gray-700 pb-2">
-          © Copyright 2025 GROVERSONS Couples Try. All Right Reserved.
+          © Copyright 2025 Couples Try. All Right Reserved.
         </div>
       </div>
     </footer>

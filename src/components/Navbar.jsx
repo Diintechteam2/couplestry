@@ -22,12 +22,12 @@ const icons = [
 ]
 
 const categoryItems = [
-  { name: "Bra", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=256&q=80" },
-  { name: "Panty", image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=facearea&w=256&q=80" },
-  { name: "Athleisure", image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=facearea&w=256&q=80" },
-  { name: "Loungewear", image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=256&q=80" },
-  { name: "Co-ord Sets", image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=256&q=80" },
-  { name: "Winterwear", image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=256&q=80" },
+  { name: "Bra", image: "/Bra_icon.avif" },
+  { name: "Panty", image: "/panty_icon.avif" },
+  { name: "Athleisure", image: "/athleisure_icon.avif" },
+  { name: "Loungewear", image: "/Loungewear_icon.avif" },
+  { name: "Co-ord Sets", image: "/co-ordsets_icon.avif" },
+  { name: "Winterwear", image: "/winterwear_icon.avif" },
   { name: "Sale", image: "/sale_icon.avif", special: true },
 ]
 
@@ -124,7 +124,7 @@ export default function Navbar() {
                 <img
                   src={category.image || "/placeholder.svg"}
                   alt={category.name}
-                  className="w-full h-full object-fill"
+                  className="w-full h-full object-cover"
                 />
               </div>
               <span className="text-[10px] md:text-sm font-medium text-gray-800 text-center">{category.name}</span>

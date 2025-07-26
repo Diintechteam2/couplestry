@@ -176,7 +176,7 @@ export default function ProductSection() {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-fill"
                     />
                   </div>
                   <div className="w-full">
@@ -199,7 +199,7 @@ export default function ProductSection() {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-fill"
                     />
                   </div>
                   <div className="w-full">

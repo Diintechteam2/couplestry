@@ -124,7 +124,7 @@ export default function Navbar() {
                 <img
                   src={category.image || "/placeholder.svg"}
                   alt={category.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-fill"
                 />
               </div>
               <span className="text-[10px] md:text-sm font-medium text-gray-800 text-center">{category.name}</span>

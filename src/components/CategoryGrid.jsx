@@ -86,7 +86,7 @@ export default function CategoryGrid() {
               key={cat.name}
               className={`relative rounded-xl overflow-hidden shadow-md min-w-[80vw] max-w-[80vw] h-[240px] flex flex-col justify-end snap-center transition-all duration-500 ${i === active ? 'scale-100' : 'scale-95 opacity-80'}`}
             >
-              <img src={cat.bg} alt="bg" className="absolute inset-0 w-full h-full object-cover z-0" draggable="false" />
+              <img src={cat.bg} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
               <span className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-white text-lg font-cursive font-semibold text-center drop-shadow-lg w-max px-2">
                 {cat.name}
               </span>
@@ -110,7 +110,7 @@ export default function CategoryGrid() {
         {/* Top row: 2 cards, each col-span-3 sm:col-span-1, one big, one small */}
         <div className="col-span-2 row-span-1 flex flex-col">
           <div className="relative rounded-xl overflow-hidden shadow-md flex-1 min-h-[400px]">
-            <img src={categories[0].bg} alt="bg" className="absolute inset-0 w-full h-full object-cover z-0" draggable="false" />
+            <img src={categories[0].bg} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
             <span className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-white text-2xl font-cursive font-semibold text-center drop-shadow-lg w-max px-2">
               {categories[0].name}
             </span>
@@ -118,7 +118,7 @@ export default function CategoryGrid() {
         </div>
         <div className="col-span-1 row-span-1 flex flex-col">
           <div className="relative rounded-xl overflow-hidden shadow-md flex-1 min-h-[400px]">
-            <img src={categories[1].bg} alt="bg" className="absolute inset-0 w-full h-full object-cover z-0" draggable="false" />
+            <img src={categories[1].bg} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
             <span className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-white text-2xl font-cursive font-semibold text-center drop-shadow-lg w-max px-2">
               {categories[1].name}
             </span>
@@ -128,7 +128,7 @@ export default function CategoryGrid() {
         {categories.slice(2).map((cat) => (
           <div key={cat.name} className="col-span-1 row-span-1 flex flex-col">
             <div className="relative rounded-xl overflow-hidden shadow-md flex-1 min-h-[280px]">
-              <img src={cat.bg} alt="bg" className="absolute inset-0 w-full h-full object-cover z-0" draggable="false" />
+              <img src={cat.bg} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
               <span className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-white text-xl font-cursive font-semibold text-center drop-shadow-lg w-max px-2">
                 {cat.name}
               </span>

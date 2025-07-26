@@ -45,7 +45,7 @@ export default function HeroSection() {
             key={img}
             src={img}
             alt="Hero Slide"
-            className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ease-in z-0 ${
+            className={`absolute inset-0 w-full h-full object-fill object-center transition-opacity duration-700 ease-in z-0 ${
               i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
             draggable="false"

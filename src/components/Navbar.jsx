@@ -124,7 +124,7 @@ export default function Navbar() {
         <span className="flex-1 flex items-center justify-center text-[10px] md:text-sm leading-tight md:leading-normal md:font-bold">
           💟 Enjoy FREE shipping on all orders above ₹999! 💗 Shop now & save big!
         </span>
-        <a href="#" className="text-black flex items-center gap-1 ml-2 whitespace-nowrap hidden md:flex">
+        <a href="#" className="text-black items-center gap-1 ml-2 whitespace-nowrap hidden md:flex">
           <Package size={16} />
           Track Order
         </a>

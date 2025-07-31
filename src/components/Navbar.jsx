@@ -1,5 +1,8 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+import { Link } from "react-router-dom"
 import { User, Search, Heart, ShoppingBag, Package, Menu, X, ChevronRight } from "lucide-react"
+import { API_BASE_URL } from "../config"
+import axios from "axios"
 
 const menuItems = [
   "BRA",
@@ -33,6 +36,84 @@ const categoryItems = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [categories, setCategories] = useState([])
+  // New state for hover logic
+  const [hoveredCategory, setHoveredCategory] = useState(null)
+  const [hoveredSubcategory, setHoveredSubcategory] = useState(null)
+  const [showDropdown, setShowDropdown] = useState(null)
+  const [showSubDropdown, setShowSubDropdown] = useState(null)
+  
+  // Refs for hover delay
+  const hoverTimeoutRef = useRef(null)
+  const subHoverTimeoutRef = useRef(null)
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/clients/CLI6781413BO1/dress/categories`)
+      console.log(response.data.categories)
+      if(response.data.success){
+        setCategories(response.data.categories)
+      }
+    } 
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchCategories()
+  },[])
+
+  // Clear timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current)
+      if (subHoverTimeoutRef.current) clearTimeout(subHoverTimeoutRef.current)
+    }
+  }, [])
+
+  const handleCategoryMouseEnter = (catId) => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current)
+    setHoveredCategory(catId)
+    setShowDropdown(catId)
+    setHoveredSubcategory(null)
+    setShowSubDropdown(null)
+  }
+
+  const handleCategoryMouseLeave = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredCategory(null)
+      setShowDropdown(null)
+      setHoveredSubcategory(null)
+      setShowSubDropdown(null)
+    }, 150) // 150ms delay
+  }
+
+  const handleSubcategoryMouseEnter = (subId) => {
+    if (subHoverTimeoutRef.current) clearTimeout(subHoverTimeoutRef.current)
+    setHoveredSubcategory(subId)
+    setShowSubDropdown(subId)
+  }
+
+  const handleSubcategoryMouseLeave = () => {
+    subHoverTimeoutRef.current = setTimeout(() => {
+      setHoveredSubcategory(null)
+      setShowSubDropdown(null)
+    }, 150) // 150ms delay
+  }
+
+  const handleDropdownMouseEnter = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current)
+  }
+
+  const handleDropdownMouseLeave = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredCategory(null)
+      setShowDropdown(null)
+      setHoveredSubcategory(null)
+      setShowSubDropdown(null)
+    }, 150)
+  }
 
   return (
     <>
@@ -60,9 +141,9 @@ export default function Navbar() {
             </div>
             <nav className="flex-1 overflow-y-auto">
               <ul className="divide-y divide-gray-200">
-                {menuItems.map((item) => (
-                  <li key={item} className="flex items-center justify-between px-6 py-3 text-[#F48FB1] font-medium text-base">
-                    <span>{item}</span>
+                {categories.map((item) => (
+                  <li key={item.id} className="flex items-center justify-between px-6 py-3 text-[#F48FB1] font-medium text-base">
+                    <span>{item.name}</span>
                     <ChevronRight size={20} />
                   </li>
                 ))}
@@ -88,7 +169,7 @@ export default function Navbar() {
           </div>
           {/* Logo - Center */}
           <div className="flex flex-col items-center flex-1 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
-            <span className="text-2xl md:text-5xl font-serif text-[#d6668c] font-bold tracking-tight">Couples Try</span>
+            <span className="text-2xl md:text-5xl font-serif text-[#d6668c] font-bold tracking-tight">TryoAI</span>
           </div>
           {/* Icons - Right */}
           <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
@@ -103,11 +184,57 @@ export default function Navbar() {
           </div>
         </div>
         {/* Menu - Below Logo, only on md+ */}
-        <div className="hidden md:flex justify-center mt-10">
+        <div className="hidden md:flex justify-center mt-10 relative">
           <ul className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs md:text-sm font-medium text-black">
-            {menuItems.map((item) => (
-              <li key={item} className="cursor-pointer">
-                {item}
+            {categories.map((cat) => (
+              <li
+                key={cat.id}
+                className="cursor-pointer relative px-2"
+                onMouseEnter={() => handleCategoryMouseEnter(cat.id)}
+                onMouseLeave={handleCategoryMouseLeave}
+              >
+                {cat.name}
+                {/* Mega-menu style dropdown for subcategories */}
+                {showDropdown === cat.id && cat.subcategories && cat.subcategories.length > 0 && (
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white shadow-lg rounded-lg z-50 border border-gray-100 min-w-[900px] px-8 py-6 flex gap-8"
+                    onMouseEnter={handleDropdownMouseEnter}
+                    onMouseLeave={handleDropdownMouseLeave}
+                  >
+                    {cat.subcategories.map((sub) => (
+                      <div key={sub.id} className="min-w-[180px]">
+                        <div className="font-bold text-[#b1005a] mb-2">{sub.name}</div>
+                        <ul>
+                          {sub.types && sub.types.map((type) => (
+                            <li key={type.id} className="mb-2">
+                              <Link to={`category/${cat.name}/subcategory/${sub.name}/type/${type.name}`} className="text-gray-700 hover:text-pink-600">
+                                {type.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {/* Types directly under category (if any) */}
+                {showDropdown === cat.id && cat.types && cat.types.length > 0 && (!cat.subcategories || cat.subcategories.length === 0) && (
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white shadow-lg rounded-lg min-w-[220px] z-50 border border-gray-100 px-6 py-4"
+                    onMouseEnter={handleDropdownMouseEnter}
+                    onMouseLeave={handleDropdownMouseLeave}
+                  >
+                    <ul>
+                      {cat.types.map((type) => (
+                        <li key={type.id} className="mb-2">
+                          <Link to={`category/${cat.name}/type/${type.name}`} className="text-gray-700 hover:text-pink-600">
+                            {type.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
@@ -115,7 +242,7 @@ export default function Navbar() {
       </nav>
 
       {/* Product Categories Section */}
-      <div className="w-full bg-[#FFC1CC] px-2 md:px-4 py-4 md:py-6">
+      {/* <div className="w-full bg-[#FFC1CC] px-2 md:px-4 py-4 md:py-6">
         <div className="flex md:justify-center justify-start items-center gap-2 md:gap-6 overflow-x-auto scrollbar-hide">
           {categoryItems.map((category) => (
             <div key={category.name} className="flex flex-col items-center min-w-[22vw] max-w-[22vw] md:min-w-[100px] md:max-w-[120px] cursor-pointer">
@@ -132,7 +259,7 @@ export default function Navbar() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       <style>{`
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

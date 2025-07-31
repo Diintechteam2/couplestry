@@ -1,5 +1,9 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Heart, Star, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react"
+import { API_BASE_URL } from "../config"
+import axios from "axios"
+
+
 
 const products = [
   {
@@ -118,9 +122,22 @@ const products = [
 
 export default function ProductSection() {
   const [activeTab, setActiveTab] = useState("hot-sellers")
+  const [dresses, setDresses] = useState([])
   const scrollContainerRef = useRef(null)
 
-  const filteredProducts = products.filter(product => product.category === activeTab)
+  const fetchDresses = async () => {
+    const response = await axios.get(`${API_BASE_URL}/clients/CLI6781413BO1/dress/get`)
+    console.log(response.data)
+    if(response.data.success){
+      setDresses(response.data.dresses)
+    }
+  }
+  
+  useEffect(()=>{
+    fetchDresses()
+  },[])
+
+  const filteredProducts = dresses.filter(product => product.category)
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -171,16 +188,16 @@ export default function ProductSection() {
           <div className="mb-4">
             <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
               {filteredProducts.slice(0, 4).map((product) => (
-                <div key={product.id} className="flex-shrink-0 w-[calc(50vw-24px)] bg-white rounded-xl shadow p-2 flex flex-col items-start">
+                <div key={product._id} className="flex-shrink-0 w-[calc(50vw-24px)] bg-white rounded-xl shadow p-2 flex flex-col items-start">
                   <div className="w-full h-32 mb-2 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
                     <img
-                      src={product.image}
-                      alt={product.name}
+                      src={product.imageUrl}
+                      alt={product.type}
                       className="w-full h-full object-fill"
                     />
                   </div>
                   <div className="w-full">
-                    <div className="text-sm font-semibold text-gray-900 truncate mb-1">{product.name.length > 20 ? product.name.slice(0, 20) + '...' : product.name}</div>
+                    <div className="text-sm font-semibold text-gray-900 truncate mb-1">{product.type.length > 20 ? product.type.slice(0, 20) + '...' : product.type}</div>
                     <div className="text-[13px] font-bold text-black mt-1">
                       ₹{product.price}
                     </div>
@@ -194,16 +211,16 @@ export default function ProductSection() {
           <div>
             <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
               {filteredProducts.slice(4, 8).map((product) => (
-                <div key={product.id} className="flex-shrink-0 w-[calc(50vw-24px)] bg-white rounded-xl shadow p-2 flex flex-col items-start">
+                <div key={product._id} className="flex-shrink-0 w-[calc(50vw-24px)] bg-white rounded-xl shadow p-2 flex flex-col items-start">
                   <div className="w-full h-32 mb-2 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
                     <img
-                      src={product.image}
-                      alt={product.name}
+                      src={product.imageUrl}
+                      alt={product.type}
                       className="w-full h-full object-fill"
                     />
                   </div>
                   <div className="w-full">
-                    <div className="text-sm font-semibold text-gray-900 truncate mb-1">{product.name.length > 20 ? product.name.slice(0, 20) + '...' : product.name}</div>
+                    <div className="text-sm font-semibold text-gray-900 truncate mb-1">{product.type.length > 20 ? product.type.slice(0, 20) + '...' : product.type}</div>
                     <div className="text-[13px] font-bold text-black mt-1">
                       ₹{product.price}
                     </div>
@@ -240,12 +257,12 @@ export default function ProductSection() {
               style={{ scrollSnapType: 'x mandatory' }}
             >
               {filteredProducts.map((product) => (
-                <div key={product.id} className="flex-shrink-0 w-80 bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group/card" style={{ scrollSnapAlign: 'start' }}>
+                <div key={product._id} className="flex-shrink-0 w-80 bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group/card" style={{ scrollSnapAlign: 'start' }}>
                   {/* Product Image Container */}
                   <div className="relative group/image">
                     <img
-                      src={product.image}
-                      alt={product.name}
+                      src={product.imageUrl}
+                      alt={product.type}
                       className="w-full h-96 object-cover rounded-t-xl"
                     />
                     {/* Heart Icon and Rating */}
@@ -255,7 +272,7 @@ export default function ProductSection() {
                       </button>
                       <div className="bg-white rounded-full px-3 py-2 shadow-md flex items-center gap-1">
                         <Star size={12} className="text-yellow-400 fill-current" />
-                        <span className="text-sm font-semibold text-gray-700">{product.rating}</span>
+                        <span className="text-sm font-semibold text-gray-700">{product.brand}</span>
                       </div>
                     </div>
                     {/* Add to Cart Overlay - Desktop Only */}
@@ -269,7 +286,7 @@ export default function ProductSection() {
                   {/* Product Info */}
                   <div className="p-6">
                     <h3 className="text-base font-medium text-gray-800 mb-3 line-clamp-2 leading-relaxed">
-                      {product.name}
+                      {product.type}
                     </h3>
                     <div className="flex items-center justify-between">
                       <div>

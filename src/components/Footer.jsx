@@ -33,7 +33,7 @@ export default function Footer() {
           {/* Logo & Community */}
           <div className="col-span-1 flex flex-col items-start">
           <div className="flex flex-col items-center flex-1">
-            <span className="text-2xl md:text-4xl font-serif text-[#b73963] font-bold tracking-tight">Couples Try</span>
+            <span className="text-2xl md:text-4xl font-serif text-[#b73963] font-bold tracking-tight">TryoAI</span>
             </div>
             <h3 className="text-xl font-cursive font-semibold mb-2">Join Our Community</h3>
             <p className="mb-3 text-base">Stay up to date with the new collections, products and exclusive offers</p>

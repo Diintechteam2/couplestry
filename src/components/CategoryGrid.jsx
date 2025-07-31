@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import { API_BASE_URL } from "../config"
+import axios from "axios"
 
 const categories = [
   {
@@ -28,12 +30,26 @@ const categories = [
   },
 ]
 
+
+
 export default function CategoryGrid() {
   // Swiper state for mobile
   const [active, setActive] = useState(0)
   const scrollRef = useRef(null)
   const isInitialLoad = useRef(true)
   const userInteracted = useRef(false)
+  const [dresses, setDresses] = useState([])
+
+  const fetchDresses = async () => {
+    const response = await axios.get(`${API_BASE_URL}/clients/CLI6781413BO1/dress/get`)
+    console.log(response.data.dresses)
+    if(response.data.success){
+      setDresses(response.data.dresses)
+    }
+  }
+  useEffect(()=>{
+    fetchDresses()
+  },[])
 
   // Only scroll to active card when user clicks dots (not on initial load)
   useEffect(() => {
@@ -91,14 +107,14 @@ export default function CategoryGrid() {
           ref={scrollRef}
           onScroll={handleScroll}
         >
-          {categories.map((cat, i) => (
+          {dresses.map((cat, i) => (
             <div
-              key={cat.name}
+              key={cat._id}
               className={`relative rounded-xl overflow-hidden shadow-md min-w-[80vw] max-w-[80vw] h-[240px] flex flex-col justify-end snap-center transition-all duration-500 ${i === active ? 'scale-100' : 'scale-95 opacity-80'}`}
             >
-              <img src={cat.bg} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
+              <img src={cat.imageUrl} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
               <span className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-white text-lg font-cursive font-semibold text-center drop-shadow-lg w-max px-2">
-                {cat.name}
+                {cat.type}
               </span>
             </div>
           ))}
@@ -118,29 +134,29 @@ export default function CategoryGrid() {
       {/* Desktop/Tablet Grid */}
       <div className="hidden md:grid w-full max-w-full mx-auto gap-6 grid-cols-3 grid-rows-2">
         {/* Top row: 2 cards, each col-span-3 sm:col-span-1, one big, one small */}
-        <div className="col-span-2 row-span-1 flex flex-col">
+        {/* <div className="col-span-2 row-span-1 flex flex-col">
           <div className="relative rounded-xl overflow-hidden shadow-md flex-1 min-h-[400px]">
-            <img src={categories[0].bg} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
+            <img src={dresses[0].imageUrl} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
             <span className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-white text-2xl font-cursive font-semibold text-center drop-shadow-lg w-max px-2">
-              {categories[0].name}
+              {dresses[0].type}
             </span>
           </div>
-        </div>
-        <div className="col-span-1 row-span-1 flex flex-col">
+        </div> */}
+        {/* <div className="col-span-1 row-span-1 flex flex-col">
           <div className="relative rounded-xl overflow-hidden shadow-md flex-1 min-h-[400px]">
-            <img src={categories[1].bg} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
+            <img src={dresses[1].ima} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
             <span className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-white text-2xl font-cursive font-semibold text-center drop-shadow-lg w-max px-2">
-              {categories[1].name}
+              {dresses[1].type}
             </span>
           </div>
-        </div>
+        </div> */}
         {/* Bottom row: 3 cards */}
-        {categories.slice(2).map((cat) => (
-          <div key={cat.name} className="col-span-1 row-span-1 flex flex-col">
-            <div className="relative rounded-xl overflow-hidden shadow-md flex-1 min-h-[280px]">
-              <img src={cat.bg} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
+        {dresses.map((cat) => (
+          <div key={cat._id} className="col-span-1 row-span-1 flex flex-col">
+            <div className="relative rounded-xl overflow-hidden shadow-md flex-1 min-h-[400px]">
+              <img src={cat.imageUrl} alt="bg" className="absolute inset-0 w-full h-full object-fill z-0" draggable="false" />
               <span className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 text-white text-xl font-cursive font-semibold text-center drop-shadow-lg w-max px-2">
-                {cat.name}
+                {cat.type}
               </span>
             </div>
           </div>

@@ -3,8 +3,8 @@ import { ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react"
 
 const desktopImages = [
   "/heroimage-1.webp",
-  "/heroimage-2.webp",
-  "/heroimage-3.webp",
+  "/heroimage-4.jpg",
+  "/heroimage-5.jpg",
 ]
 const mobileImages = [
   "/heroimage-mob-1.jpg",
